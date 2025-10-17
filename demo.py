@@ -7,7 +7,6 @@ logging.info("checking logging module in exception file")
 try:
     a=1/0
 except Exception as e:
-    
     raise UsVisaException(e,sys)
-    logging.info("custom exception has been raised")
+
            

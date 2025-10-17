@@ -11,6 +11,7 @@ logs_dir='logs'
 logs_path=os.path.join(from_root(),logs_dir,LOG_FILE) #path to logs directory
 os.makedirs(logs_dir,exist_ok=True) #creating logs directory if not exists
 
+#now this is logic where logging will be done and above we create path for log file
 logging.basicConfig(
     filename=logs_path,
     format="[%(asctime)s ] %(name)s - %(levelname)s - %(message)s",
