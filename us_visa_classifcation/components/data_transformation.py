@@ -85,14 +85,21 @@ class DataTransformation:
                 columns_to_drop=self._schema_config['drop_columns']
                 logging.info('Dropping columns')
                 input_feature_train_df= drop_column(df=input_feature_train_df,columns=columns_to_drop)
-                target_feature_train_df=target_feature_train_df.replace(TargetValueMapping().reverse_mapping())
+                target_mapping = {key.upper(): value for key, value in TargetValueMapping().to_dict().items()}
+                target_feature_train_df = target_feature_train_df.astype(str).str.upper().map(target_mapping)
+                if target_feature_train_df.isnull().any():
+                    raise ValueError("Encountered unknown target labels while mapping training targets.")
+                target_feature_train_df = target_feature_train_df.astype(int)
                 input_feature_test_df=test_df.drop(columns=[TARGET_COLUMN],axis=1)
                 target_feature_test_df=test_df[TARGET_COLUMN]
                 input_feature_test_df['company_age']= CURRENT_YEAR-input_feature_test_df['yr_of_estab']
                 logging.info("addeded age")
                 input_feature_test_df= drop_column(df=input_feature_test_df,columns=columns_to_drop)
                 logging.info("dropped columns")
-                target_feature_test_df=target_feature_test_df.replace(TargetValueMapping().reverse_mapping())
+                target_feature_test_df = target_feature_test_df.astype(str).str.upper().map(target_mapping)
+                if target_feature_test_df.isnull().any():
+                    raise ValueError("Encountered unknown target labels while mapping testing targets.")
+                target_feature_test_df = target_feature_test_df.astype(int)
 
                 logging.info("replaced the values in target column")
                 input_feature_train_arr=preprocessor.fit_transform(input_feature_train_df)
@@ -122,7 +129,7 @@ class DataTransformation:
                 datatransformation_artifact=DataTransformationArtifact(
                     transformed_train_file_path=self.data_transformation_config.transformed_train_file_path,
                     transformed_test_file_path=self.data_transformation_config.transformed_test_file_path,
-                    preprocessed_object_file_path=self.data_transformation_config.transformed_object_file_path,
+                    transformed_object_file_path=self.data_transformation_config.transformed_object_file_path,
                 )
                 
                 return datatransformation_artifact
