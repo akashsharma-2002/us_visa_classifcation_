@@ -57,3 +57,16 @@ def save_numpy_array_data(file_path:str,array:np.array)->None:
             np.save(file_obj,array)
     except Exception as e:
         raise UsVisaException(e,sys) 
+
+def drop_column(df:pd.DataFrame, columns:list)->pd.DataFrame:
+    """
+    Drops the specified columns from the provided dataframe.
+    """
+    try:
+        missing_df = df is None
+        missing_cols = columns is None
+        if missing_df or missing_cols:
+            raise ValueError("Both df and columns parameters must be provided")
+        return df.drop(columns=columns,axis=1)
+    except Exception as e:
+        raise UsVisaException(e,sys)

@@ -12,5 +12,6 @@
            
 #testing data ingestion code
 from us_visa_classifcation.pipeline.training_pipeline import TrainingPipeline
+
 obj=TrainingPipeline()
 obj.run_pipeline()

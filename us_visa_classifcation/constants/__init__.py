@@ -2,6 +2,7 @@
 
 import os 
 from datetime import datetime
+from datetime import date
 
 DATABASE_NAME="US_VISA"
 COLLECTION_NAME="US_VISA_PROJECT"
@@ -11,6 +12,12 @@ PIPELINE_NAME: str = "us_visa"
 ARTIFACT_DIR: str = "artifact"
 
 MODEL_FILE_NAME = "model.pkl"
+
+TARGET_COLUMN = "case_status"
+CURRENT_YEAR= date.today().year
+PREPROCESSING_OBJECT_FILE_NAME = "preprocessing.pkl"
+
+SCHEMA_FILE_PATH = os.path.join("config","schema.yaml")
 
 """
 DATA INGESTION CONSTANTS
@@ -27,4 +34,19 @@ TEST_FILE_NAME: str = "test.csv"
 
 FILE_NAME: str = "us_visa.csv"
 MODEL_FILE_NAME: str = "model.pkl"  
+
+"""
+DATA VALIDATION CONSTANTS
+"""
+DATA_VALIDATION_DIR_NAME: str = "data_validation"
+DATA_VALIDATION_DRIFT_REPORT_DIR: str = "drift_report"
+DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"
+
+
+"""
+DATA TRANSFORMATION CONSTANTS
+"""
+DATA_TRANSFORMATION_DIR_NAME: str="data_transformation"
+DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR: str="transformed" #holding transformed data files
+DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR: str="transformed_object" #holding pickle file of preprocessing object
 
